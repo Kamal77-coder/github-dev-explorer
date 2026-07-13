@@ -28,7 +28,7 @@ export default function App() {
   const [repos, setRepos] = useState<GitHubRepo[]>([])
   const [error, setError] = useState<ErrorState | null>(null)
 
-  const load = useCallback(async (login: string) => {
+  const load = useCallback(async (login: string, push = true) => {
     setStatus('loading')
     setError(null)
     try {
@@ -36,6 +36,10 @@ export default function App() {
       setUser(u)
       setRepos(r)
       setStatus('ready')
+      // reflect the current profile in the URL so it's shareable
+      const url = new URL(window.location.href)
+      url.searchParams.set('u', u.login)
+      window.history[push ? 'pushState' : 'replaceState']({ u: u.login }, '', url)
     } catch (err) {
       if (err instanceof RateLimitError) {
         setError({
@@ -59,10 +63,22 @@ export default function App() {
     }
   }, [])
 
-  // deep-link support: ?u=login
+  // deep-link support: ?u=login (initial load + back/forward navigation)
   useEffect(() => {
     const u = new URLSearchParams(window.location.search).get('u')
-    if (u) load(u)
+    if (u) load(u, false)
+
+    const onPop = () => {
+      const login = new URLSearchParams(window.location.search).get('u')
+      if (login) load(login, false)
+      else {
+        setStatus('idle')
+        setUser(null)
+        setRepos([])
+      }
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
   }, [load])
 
   const langs = status === 'ready' ? languageBreakdown(repos) : []

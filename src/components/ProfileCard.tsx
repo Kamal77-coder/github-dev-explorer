@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import {
   Building2,
+  Check,
   ExternalLink,
+  Link2,
   LinkIcon,
   MapPin,
   Users,
@@ -23,6 +26,19 @@ function normalizeUrl(url: string) {
 }
 
 export function ProfileCard({ user }: { user: GitHubUser }) {
+  const [copied, setCopied] = useState(false)
+
+  const shareLink = async () => {
+    const url = `${window.location.origin}/?u=${user.login}`
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // clipboard blocked (e.g. insecure context) — no-op
+    }
+  }
+
   return (
     <div className="animate-fade-in rounded-2xl border border-[#30363d] bg-[#161b22] p-6">
       <div className="flex flex-col items-center text-center">
@@ -48,6 +64,22 @@ export function ProfileCard({ user }: { user: GitHubUser }) {
             {user.bio}
           </p>
         )}
+        <button
+          onClick={shareLink}
+          className="mt-4 flex items-center gap-1.5 rounded-lg border border-[#30363d] px-3 py-1.5 text-xs font-medium text-neutral-300 transition-colors hover:border-[#58a6ff] hover:text-white"
+        >
+          {copied ? (
+            <>
+              <Check size={13} className="text-emerald-400" />
+              Link copied
+            </>
+          ) : (
+            <>
+              <Link2 size={13} />
+              Copy share link
+            </>
+          )}
+        </button>
       </div>
 
       <div className="my-5 flex items-center justify-around border-y border-[#30363d] py-4">
