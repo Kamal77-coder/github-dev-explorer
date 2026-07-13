@@ -3,7 +3,7 @@
 > Search any GitHub developer and explore their profile, language breakdown,
 > and top repositories — pulled **live from the GitHub REST API**.
 
-**🔗 Live demo:** https://github-explorer-by-kamal.vercel.app
+**🔗 Live demo:** https://kamal-rohilla-vercel.vercel.app
 
 _Made by [Kamal Rohilla](https://github.com/Kamal77-coder)._
 
