@@ -164,8 +164,21 @@ export default function App() {
       )}
 
       <footer className="mt-12 text-center text-xs text-neutral-600">
-        Built with React + TypeScript + Vite · data from the public GitHub REST
-        API (unauthenticated)
+        <p>
+          Built with React + TypeScript + Vite · data from the public GitHub
+          REST API (unauthenticated)
+        </p>
+        <p className="mt-1.5">
+          Made by{' '}
+          <a
+            href="https://github.com/Kamal77-coder"
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-neutral-400 transition-colors hover:text-[#58a6ff]"
+          >
+            Kamal Rohilla
+          </a>
+        </p>
       </footer>
     </div>
   )
