@@ -3,6 +3,8 @@
 > Search any GitHub developer and explore their profile, language breakdown,
 > and top repositories — pulled **live from the GitHub REST API**.
 
+**🔗 Live demo:** https://github-dev-explorer-sand.vercel.app
+
 A front-end app that integrates a **real-world REST API** (no backend, no API
 key required). Deploys as a single static site.
 
